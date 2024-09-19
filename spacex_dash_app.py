@@ -82,11 +82,11 @@ def get_pie_chart(entered_site):
               [Input(component_id='site-dropdown', component_property='value'), Input(component_id="payload-slider", component_property="value")])
 def get_payload_range(entered_site, payload_range):
 
-    
+    print(payload_range)
     if entered_site == 'ALL' or entered_site == None:
-        fig = px.scatter(spacex_df, x='Payload Mass (kg)', y='class', color='Booster Version Category')
+        fig = px.scatter(spacex_df[(spacex_df['Payload Mass (kg)'] > payload_range[0]) & (spacex_df['Payload Mass (kg)'] < payload_range[1]) ], x='Payload Mass (kg)', y='class', color='Booster Version Category')
     else:
-        fig = px.scatter(spacex_df[spacex_df['Launch Site']==entered_site], x='Payload Mass (kg)', y='class', color='Booster Version Category')
+        fig = px.scatter(spacex_df[(spacex_df['Launch Site']==entered_site) & (spacex_df['Payload Mass (kg)'] > payload_range[0]) & (spacex_df['Payload Mass (kg)'] < payload_range[1]) ], x='Payload Mass (kg)', y='class', color='Booster Version Category')
    
     return fig
 
